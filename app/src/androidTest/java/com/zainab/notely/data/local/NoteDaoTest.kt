@@ -1,0 +1,71 @@
+package com.zainab.notely.data.local
+
+import android.content.Context
+import android.database.sqlite.SQLiteConstraintException
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.runBlocking
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+
+@RunWith(AndroidJUnit4::class)
+class NoteDaoTest {
+
+    private lateinit var db: AppDatabase
+    private lateinit var noteDao: NoteDao
+    private lateinit var categoryDao: CategoryDao
+
+    @Before
+    fun setup() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+        noteDao = db.noteDao()
+        categoryDao = db.categoryDao()
+    }
+
+    @After
+    fun teardown() {
+        db.close()
+    }
+
+    private fun newNote(categoryId: Int? = null) = Note(
+        title = "Test",
+        content = "# Hello",
+        createdAt = 1L,
+        updatedAt = 1L,
+        sourceType = NoteSource.TYPED,
+        categoryId = categoryId
+    )
+
+    @Test
+    fun insertAndReadBack() = runBlocking {
+        val id = noteDao.insert(newNote()).toInt()
+        val loaded = noteDao.getById(id)
+        assertNotNull(loaded)
+        assertEquals("Test", loaded!!.title)
+        assertEquals(NoteSource.TYPED, loaded.sourceType)
+    }
+
+    @Test
+    fun deletingCategoryKeepsNoteAndClearsCategoryId() = runBlocking {
+        val catId = categoryDao.insert(Category(name = "Temp", colorHex = "#2DD4BF")).toInt()
+        val noteId = noteDao.insert(newNote(categoryId = catId)).toInt()
+
+        categoryDao.deleteCustomById(catId)
+
+        val loaded = noteDao.getById(noteId)
+        assertNotNull(loaded)               // note survived
+        assertNull(loaded!!.categoryId)     // but now "Uncategorized"
+    }
+
+    @Test(expected = SQLiteConstraintException::class)
+    fun noteWithNonExistentCategoryIsRejected() {
+        runBlocking { noteDao.insert(newNote(categoryId = 999)) }
+    }
+}
