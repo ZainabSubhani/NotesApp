@@ -5,11 +5,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.zainab.notely.data.local.Note
+import com.zainab.notely.data.local.DatabaseProvider
 import com.zainab.notely.data.local.NoteSource
+import com.zainab.notely.data.local.Note
 import com.zainab.notely.databinding.ActivityMainBinding
 import com.zainab.notely.ui.notes.NoteAdapter
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,15 +34,24 @@ class MainActivity : AppCompatActivity() {
         binding.rvNotes.layoutManager = LinearLayoutManager(this)
         binding.rvNotes.adapter = adapter
 
-        adapter.submitList(fakeNotes())
+        val db = DatabaseProvider.getDatabase(applicationContext)
+
+        lifecycleScope.launch {
+            seedIfEmpty(db)
+            val notes = db.noteDao().getAll()
+            adapter.submitList(notes)
+        }
     }
 
-    private fun fakeNotes(): List<Note> = listOf(
-        Note(id = 1, title = "Meeting notes", content = "Discussed Q3 roadmap, follow up with design",
-            createdAt = 0L, updatedAt = 0L, sourceType = NoteSource.TYPED),
-        Note(id = 2, title = "Lecture pg 3", content = "Mitochondria is the powerhouse of the cell",
-            createdAt = 0L, updatedAt = 0L, sourceType = NoteSource.SCANNED),
-        Note(id = 3, title = "Grocery list", content = "Milk, eggs, spinach, bread",
-            createdAt = 0L, updatedAt = 0L, sourceType = NoteSource.TYPED)
-    )
+    private suspend fun seedIfEmpty(db: com.zainab.notely.data.local.AppDatabase) {
+        val dao = db.noteDao()
+        if (dao.getAll().isEmpty()) {
+            dao.insert(Note(title = "Meeting notes", content = "Discussed Q3 roadmap, follow up with design",
+                createdAt = System.currentTimeMillis(), updatedAt = System.currentTimeMillis(), sourceType = NoteSource.TYPED))
+            dao.insert(Note(title = "Lecture pg 3", content = "Mitochondria is the powerhouse of the cell",
+                createdAt = System.currentTimeMillis(), updatedAt = System.currentTimeMillis(), sourceType = NoteSource.SCANNED))
+            dao.insert(Note(title = "Grocery list", content = "Milk, eggs, spinach, bread",
+                createdAt = System.currentTimeMillis(), updatedAt = System.currentTimeMillis(), sourceType = NoteSource.TYPED))
+        }
+    }
 }
