@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteConstraintException
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.zainab.notely.getOrAwaitValue
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -45,11 +46,19 @@ class NoteDaoTest {
 
     @Test
     fun insertAndReadBack() = runBlocking {
+        noteDao.insert(newNote())
+        val all = noteDao.getAll().getOrAwaitValue()
+        assertEquals(1, all.size)
+        assertEquals("Test", all[0].title)
+        assertEquals(NoteSource.TYPED, all[0].sourceType)
+    }
+
+    @Test
+    fun getByIdReturnsInsertedNote() = runBlocking {
         val id = noteDao.insert(newNote()).toInt()
         val loaded = noteDao.getById(id)
         assertNotNull(loaded)
         assertEquals("Test", loaded!!.title)
-        assertEquals(NoteSource.TYPED, loaded.sourceType)
     }
 
     @Test

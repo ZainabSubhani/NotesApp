@@ -1,5 +1,6 @@
 package com.zainab.notely.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -20,5 +21,5 @@ interface NoteDao {
     suspend fun getById(id: Int): Note?
 
     @Query("SELECT * FROM notes ORDER BY updatedAt DESC")
-    suspend fun getAll(): List<Note>
+    fun getAll(): LiveData<List<Note>>
 }
