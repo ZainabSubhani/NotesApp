@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NotesApp — Design Reference v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F7F5; --surface:#FFFFFF; --ink:#16171B; --ink-soft:#6E6F78;
+    --border:#ECECE9; --accent:#0D9488; --danger:#DC2626;
+    --work:#6366F1; --personal:#FB7185; --ideas:#A78BFA; --health:#34D399; --study:#38BDF8;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;padding:48px 24px 100px;}
+  h1.title{font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0 0 6px;}
+  p.subtitle{color:var(--ink-soft);font-size:14px;margin:0 0 44px;max-width:600px;line-height:1.6;}
+  section{margin-bottom:52px;}
+  h2.section-head{font-size:19px;font-weight:700;margin:0 0 16px;border-bottom:1px solid var(--border);padding-bottom:10px;}
+  .gallery{display:flex;flex-wrap:wrap;gap:26px;}
+  .frame-block{display:flex;flex-direction:column;gap:9px;}
+  .frame-caption{font-size:13px;font-weight:700;}
+  .frame-caption span{display:block;font-weight:400;color:var(--ink-soft);font-size:11px;margin-top:2px;}
+  .frame{width:250px;background:var(--surface);border-radius:20px;border:1px solid var(--border);overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.05);}
+  .fr-head{display:flex;justify-content:space-between;align-items:center;padding:16px 16px 4px;}
+  .fr-title{font-size:20px;font-weight:800;letter-spacing:-0.02em;}
+  .icon-row{display:flex;gap:10px;color:var(--ink-soft);font-size:13px;}
+  .chips{display:flex;gap:6px;padding:12px 16px 4px;overflow-x:auto;}
+  .chip{font-size:10px;font-weight:600;padding:5px 10px;border-radius:9px;border:1px solid var(--border);white-space:nowrap;color:var(--ink-soft);}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .chip.dash{border-style:dashed;}
+  .row-list{padding:8px 12px 60px;display:flex;flex-direction:column;gap:7px;}
+  .item{background:var(--surface);border:1px solid var(--border);border-left:3px solid transparent;border-radius:12px;padding:11px 12px;}
+  .it{font-size:13px;font-weight:700;margin:0 0 3px;}
+  .ic{font-size:11px;color:var(--ink-soft);margin:0 0 6px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .tag{font-size:8px;font-weight:700;padding:2px 7px;border-radius:5px;float:right;}
+  .meta{font-size:9px;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;}
+  .fabs{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:8px;}
+  .fab-s{width:36px;height:36px;border-radius:11px;background:var(--surface);border:1.5px solid var(--accent);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:15px;}
+  .fab-p{width:44px;height:44px;border-radius:13px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;}
+  .frame-rel{position:relative;}
+  .nav{display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid var(--border);}
+  .navitem{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:8px;color:var(--ink-soft);}
+  .navitem.active{color:var(--accent);font-weight:700;}
+  .swatch-row{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:6px;}
+  .sw{display:flex;flex-direction:column;align-items:center;gap:5px;width:52px;}
+  .sw-dot{width:32px;height:32px;border-radius:50%;}
+  .sw-name{font-size:9px;color:var(--ink-soft);text-align:center;}
+  table{border-collapse:collapse;font-size:12px;width:100%;max-width:520px;}
+  td,th{padding:6px 10px;border-bottom:1px solid var(--border);text-align:left;}
+  th{color:var(--ink-soft);font-weight:600;}
+</style>
+</head>
+<body>
+
+<h1 class="title">NotesApp — Design Reference v1.0</h1>
+<p class="subtitle">Final consolidated design system and screen set. Notes · Checklists · Reminders · Settings, with OCR-scan as the headline differentiator. Companion to NotesApp_PRD.md.</p>
+
+<section>
+  <h2 class="section-head">Color tokens</h2>
+  <table>
+    <tr><th>Token</th><th>Light</th><th>Dark</th></tr>
+    <tr><td>Background</td><td>#F7F7F5</td><td>#16171B</td></tr>
+    <tr><td>Surface</td><td>#FFFFFF</td><td>#1D1E23</td></tr>
+    <tr><td>Text primary</td><td>#16171B</td><td>#EDEDEF</td></tr>
+    <tr><td>Text secondary</td><td>#6E6F78</td><td>#8A8B93</td></tr>
+    <tr><td>Accent</td><td>#0D9488</td><td>#5EEAD4</td></tr>
+    <tr><td>Danger</td><td>#DC2626</td><td>#F87171</td></tr>
+    <tr><td>Border</td><td>#ECECE9</td><td>#26272D</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2 class="section-head">Category palettes — two-tier, non-overlapping</h2>
+  <p style="font-size:12px;color:var(--ink-soft);margin-bottom:12px;">Default categories are seeded once at first launch and are locked (cannot be renamed or deleted). Users add their own with the + chip; custom categories draw from a separate palette so they can never visually collide with a default one. Color belongs to the category, applied consistently everywhere it appears.</p>
+  <p style="font-size:11px;font-weight:700;color:var(--ink-soft);margin-bottom:8px;">DEFAULT (SEEDED, LOCKED)</p>
+  <div class="swatch-row">
+    <div class="sw"><div class="sw-dot" style="background:#6366F1;"></div><span class="sw-name">Work</span></div>
+    <div class="sw"><div class="sw-dot" style="background:#FB7185;"></div><span class="sw-name">Personal</span></div>
+    <div class="sw"><div class="sw-dot" style="background:#A78BFA;"></div><span class="sw-name">Ideas</span></div>
+    <div class="sw"><div class="sw-dot" style="background:#34D399;"></div><span class="sw-name">Health</span></div>
+    <div class="sw"><div class="sw-dot" style="background:#38BDF8;"></div><span class="sw-name">Study</span></div>
+  </div>
+  <p style="font-size:11px;font-weight:700;color:var(--ink-soft);margin:14px 0 8px;">CUSTOM (USER-CREATED)</p>
+  <div class="swatch-row">
+    <div class="sw"><div class="sw-dot" style="background:#2DD4BF;"></div><span class="sw-name">Teal</span></div>
+    <div class="sw"><div class="sw-dot" style="background:#E879F9;"></div><span class="sw-name">Fuchsia</span></div>
+    <div class="sw"><div class="sw-dot" style="background:#A3E635;"></div><span class="sw-name">Lime</span></div>
+    <div class="sw"><div class="sw-dot" style="background:#22D3EE;"></div><span class="sw-name">Cyan</span></div>
+    <div class="sw"><div class="sw-dot" style="background:#FB923C;"></div><span class="sw-name">Orange</span></div>
+    <div class="sw"><div class="sw-dot" style="background:#64748B;"></div><span class="sw-name">Slate</span></div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-head">Notes module</h2>
+  <div class="gallery">
+
+    <div class="frame-block">
+      <div class="frame-caption">Notes List<span>list view only, dual FAB, category chips</span></div>
+      <div class="frame frame-rel">
+        <div class="fr-head"><span class="fr-title">Notes</span><span class="icon-row">⚲</span></div>
+        <div class="chips"><span class="chip on">All · 3</span><span class="chip">Work</span><span class="chip">Personal</span><span class="chip dash">+ Add</span></div>
+        <div class="row-list">
+          <div class="item" style="border-left-color:#6366F1;"><span class="tag" style="background:#E0E7FF;color:#4338CA;">WORK</span><p class="it">Meeting notes</p><p class="ic">Discussed Q3 roadmap, follow up with design...</p><p class="meta">Aug 29</p></div>
+          <div class="item" style="border-left-color:#6366F1;"><span class="tag" style="background:#E0E7FF;color:#4338CA;">WORK</span><p class="it">Lecture pg 3</p><p class="ic">Mitochondria is the powerhouse of the cell...</p><p class="meta">Yesterday · scanned</p></div>
+          <div class="item" style="border-left-color:#FB7185;"><span class="tag" style="background:#FFE4E6;color:#BE123C;">PERSONAL</span><p class="it">Grocery list</p><p class="ic">Milk, eggs, spinach, bread...</p><p class="meta">Sep 1</p></div>
+        </div>
+        <div class="fabs"><div class="fab-s">📷</div><div class="fab-p">+</div></div>
+        <div class="nav">
+          <div class="navitem active">▤<span>Notes</span></div>
+          <div class="navitem">☑<span>Checklists</span></div>
+          <div class="navitem">◔<span>Reminders</span></div>
+          <div class="navitem">⚙<span>Settings</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="frame-block">
+      <div class="frame-caption">Note Detail<span>read-only, rendered Markdown</span></div>
+      <div class="frame">
+        <div class="fr-head"><span>←</span><span class="icon-row">✏ ⋯</span></div>
+        <div style="padding:12px 16px;">
+          <span class="chip" style="background:#E0E7FF;color:#4338CA;border:none;">WORK</span>
+          <p style="font-size:10px;color:var(--ink-soft);margin:10px 0 4px;">Wednesday, September 2</p>
+          <div style="border-top:1px solid var(--border);margin-bottom:12px;"></div>
+          <p style="font-size:17px;font-weight:800;margin:0 0 8px;">Team sync notes</p>
+          <p style="font-size:12px;font-weight:700;margin:0 0 6px;">Action items:</p>
+          <ul style="margin:0 0 10px;padding-left:16px;font-size:11px;line-height:1.7;"><li>Follow up with design</li><li>Review Q3 roadmap</li></ul>
+          <ol style="margin:0;padding-left:16px;font-size:11px;line-height:1.7;"><li>Ship v1</li><li>Add checklist module</li></ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="frame-block">
+      <div class="frame-caption">Add/Edit Note<span>raw Markdown + toolbar, scan banner</span></div>
+      <div class="frame">
+        <div class="fr-head"><span style="font-size:11px;color:var(--ink-soft);">Cancel</span><span style="font-size:11px;font-weight:700;background:var(--accent);color:#fff;padding:5px 12px;border-radius:14px;">Save</span></div>
+        <div class="chips"><span class="chip on">Work</span><span class="chip">Personal</span></div>
+        <div style="padding:10px 16px;">
+          <div style="display:flex;align-items:center;gap:5px;background:#FEF3C7;color:#92400E;font-size:9px;padding:5px 9px;border-radius:8px;width:fit-content;margin-bottom:8px;">📷 Scanned — review before saving</div>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.7;margin:0;"># Team sync notes<br><br>**Action items:**<br>- Follow up<br>- Review roadmap</p>
+        </div>
+        <div style="display:flex;gap:12px;padding:10px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--ink-soft);"><b>H1</b><span style="font-weight:600;">H2</span><b>B</b><span>≡</span><span>1.</span></div>
+      </div>
+    </div>
+
+    <div class="frame-block">
+      <div class="frame-caption">Scan<span>camera + gallery, both feed OCR</span></div>
+      <div class="frame">
+        <div style="padding:36px 16px 16px;">
+          <div style="background:var(--border);border-radius:10px;height:130px;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:11px;margin-bottom:12px;">camera preview</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:10px;color:var(--ink-soft);">🖼 Gallery</span>
+            <div style="width:46px;height:46px;border-radius:50%;border:2px solid var(--ink);"></div>
+            <span style="width:40px;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="frame-block">
+      <div class="frame-caption">Extracted text preview<span>confirmation checkpoint before save</span></div>
+      <div class="frame">
+        <div style="padding:16px;">
+          <p style="font-size:10px;color:var(--ink-soft);margin-bottom:6px;">Detected text:</p>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px;font-size:10px;line-height:1.6;margin-bottom:12px;">Mitochondria is the powerhouse of the cell...</div>
+          <div style="display:flex;gap:7px;">
+            <span style="flex:1;text-align:center;font-size:10px;padding:8px;border:1px solid var(--border);border-radius:8px;">Retake</span>
+            <span style="flex:1;text-align:center;font-size:10px;padding:8px;background:var(--accent);color:#fff;border-radius:8px;">Use this text</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2 class="section-head">Checklist module</h2>
+  <div class="gallery">
+    <div class="frame-block">
+      <div class="frame-caption">Checklist List<span>progress bar per item</span></div>
+      <div class="frame frame-rel">
+        <div class="fr-head"><span class="fr-title">Checklists</span><span>⚲</span></div>
+        <div class="chips"><span class="chip on">All · 3</span><span class="chip">Work</span><span class="chip">Personal</span><span class="chip dash">+ Add</span></div>
+        <div style="padding:10px 12px 60px;display:flex;flex-direction:column;gap:8px;">
+          <div class="item" style="border-left-color:#6366F1;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;"><span>App launch checklist</span><span class="tag" style="background:#E0E7FF;color:#4338CA;">WORK</span></div>
+            <div style="height:5px;border-radius:3px;background:var(--border);overflow:hidden;margin:8px 0 4px;"><div style="height:100%;width:60%;background:var(--accent);"></div></div>
+            <p style="font-size:9px;color:var(--ink-soft);margin:0;">3 of 5 done</p>
+          </div>
+          <div class="item" style="border-left-color:#FB7185;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;"><span>Weekend groceries</span><span class="tag" style="background:#FFE4E6;color:#BE123C;">PERSONAL</span></div>
+            <div style="height:5px;border-radius:3px;background:var(--border);overflow:hidden;margin:8px 0 4px;"><div style="height:100%;width:0%;background:var(--accent);"></div></div>
+            <p style="font-size:9px;color:var(--ink-soft);margin:0;">0 of 6 done</p>
+          </div>
+        </div>
+        <div class="fabs" style="bottom:14px;"><div class="fab-p">+</div></div>
+        <div class="nav">
+          <div class="navitem">▤<span>Notes</span></div>
+          <div class="navitem active">☑<span>Checklists</span></div>
+          <div class="navitem">◔<span>Reminders</span></div>
+          <div class="navitem">⚙<span>Settings</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="frame-block">
+      <div class="frame-caption">Checklist Detail<span>interactive — doubles as edit screen</span></div>
+      <div class="frame">
+        <div class="fr-head"><span>←</span><span>⋯</span></div>
+        <div style="padding:12px 16px;">
+          <p style="font-size:15px;font-weight:800;margin:0 0 6px;">App launch checklist</p>
+          <span class="chip" style="background:#E0E7FF;color:#4338CA;border:none;">WORK</span>
+          <div style="height:5px;border-radius:3px;background:var(--border);overflow:hidden;margin:12px 0 4px;"><div style="height:100%;width:60%;background:var(--accent);"></div></div>
+          <div style="margin-top:8px;">
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--border);font-size:11px;"><div style="width:16px;height:16px;border-radius:5px;background:var(--accent);"></div><span style="text-decoration:line-through;color:var(--ink-soft);">Set up Room database</span></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--border);font-size:11px;"><div style="width:16px;height:16px;border-radius:5px;border:1.5px solid var(--ink-soft);"></div><span>Write privacy policy</span></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:10px 0;font-size:11px;color:var(--ink-soft);">+ Add item</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-head">Reminders module</h2>
+  <div class="gallery">
+    <div class="frame-block">
+      <div class="frame-caption">Reminders List<span>grouped Overdue / Today / Upcoming, no calendar/date strip</span></div>
+      <div class="frame frame-rel">
+        <div class="fr-head"><span class="fr-title">Reminders</span><span>⚲</span></div>
+        <div style="padding:14px 16px 60px;">
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.05em;color:var(--danger);margin:6px 0;">OVERDUE</p>
+          <div class="item" style="border-left-color:var(--danger);display:flex;align-items:center;gap:9px;"><div style="width:17px;height:17px;border-radius:5px;border:1.5px solid var(--ink-soft);flex-shrink:0;"></div><div><p class="it" style="margin:0;">Drink water</p><p class="meta">Yesterday · 10:00</p></div></div>
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.05em;color:var(--ink-soft);margin:10px 0 6px;">TODAY</p>
+          <div class="item" style="border-left-color:var(--accent);display:flex;align-items:center;gap:9px;"><div style="width:17px;height:17px;border-radius:5px;border:1.5px solid var(--ink-soft);flex-shrink:0;"></div><div><p class="it" style="margin:0;">Submit assignment</p><p class="meta">18:00</p></div></div>
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.05em;color:var(--ink-soft);margin:10px 0 6px;">UPCOMING</p>
+          <div class="item" style="border-left-color:var(--border);display:flex;align-items:center;gap:9px;"><div style="width:17px;height:17px;border-radius:5px;border:1.5px solid var(--ink-soft);flex-shrink:0;"></div><div><p class="it" style="margin:0;">Team standup</p><p class="meta">Tomorrow · 09:00</p></div></div>
+        </div>
+        <div class="fabs" style="bottom:14px;"><div class="fab-p">+</div></div>
+        <div class="nav">
+          <div class="navitem">▤<span>Notes</span></div>
+          <div class="navitem">☑<span>Checklists</span></div>
+          <div class="navitem active">◔<span>Reminders</span></div>
+          <div class="navitem">⚙<span>Settings</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="frame-block">
+      <div class="frame-caption">Add Reminder<span>title, date, time</span></div>
+      <div class="frame">
+        <div class="fr-head"><span style="font-size:11px;color:var(--ink-soft);">Cancel</span><span style="font-size:11px;font-weight:700;background:var(--accent);color:#fff;padding:5px 12px;border-radius:14px;">Save</span></div>
+        <div style="padding:10px 16px;">
+          <p style="font-size:15px;color:var(--ink-soft);margin:6px 0 14px;">Remind me to...</p>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--border);font-size:12px;"><span>📅 Date</span><span style="color:var(--accent);">Sat, Sep 5</span></div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);font-size:12px;"><span>🕐 Time</span><span style="color:var(--accent);">9:00 AM</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-head">Settings & category management</h2>
+  <div class="gallery">
+    <div class="frame-block">
+      <div class="frame-caption">Settings<span>theme toggle, categories, notification status</span></div>
+      <div class="frame frame-rel">
+        <p style="font-size:20px;font-weight:800;padding:16px 16px 12px;margin:0;">Settings</p>
+        <p style="font-size:10px;font-weight:700;color:var(--ink-soft);margin:0 16px 6px;">APPEARANCE</p>
+        <div style="background:var(--surface);margin:0 12px 14px;border-radius:11px;border:1px solid var(--border);padding:11px 12px;display:flex;justify-content:space-between;align-items:center;font-size:12px;">
+          <span>Theme</span>
+          <div style="display:flex;background:#F1F1EE;border-radius:7px;padding:3px;">
+            <span style="padding:4px 9px;font-size:9px;font-weight:600;color:var(--ink-soft);">System</span>
+            <span style="padding:4px 9px;font-size:9px;font-weight:600;background:#fff;color:var(--accent);border-radius:5px;box-shadow:0 1px 2px rgba(0,0,0,0.08);">Light</span>
+            <span style="padding:4px 9px;font-size:9px;font-weight:600;color:var(--ink-soft);">Dark</span>
+          </div>
+        </div>
+        <p style="font-size:10px;font-weight:700;color:var(--ink-soft);margin:0 16px 6px;">ORGANIZATION</p>
+        <div style="background:var(--surface);margin:0 12px 14px;border-radius:11px;border:1px solid var(--border);padding:11px 12px;display:flex;justify-content:space-between;font-size:12px;">
+          <span>Manage categories</span><span style="color:#C7C7C2;">›</span>
+        </div>
+        <p style="font-size:10px;font-weight:700;color:var(--ink-soft);margin:0 16px 6px;">NOTIFICATIONS</p>
+        <div style="background:var(--surface);margin:0 12px 40px;border-radius:11px;border:1px solid var(--border);padding:11px 12px;display:flex;justify-content:space-between;font-size:12px;">
+          <span>Reminder notifications</span><span style="color:var(--accent);font-weight:700;font-size:11px;">Allowed ✓</span>
+        </div>
+        <div class="nav">
+          <div class="navitem">▤<span>Notes</span></div>
+          <div class="navitem">☑<span>Checklists</span></div>
+          <div class="navitem">◔<span>Reminders</span></div>
+          <div class="navitem active">⚙<span>Settings</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="frame-block">
+      <div class="frame-caption">Add Category<span>bottom sheet, custom palette, validation</span></div>
+      <div class="frame">
+        <div style="padding:14px 16px 18px;">
+          <div style="width:34px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 14px;"></div>
+          <p style="font-size:15px;font-weight:800;margin:0 0 3px;">New category</p>
+          <p style="font-size:11px;color:var(--ink-soft);margin:0 0 12px;">Name it and pick a color.</p>
+          <div style="border:1.5px solid var(--accent);border-radius:8px;padding:9px 11px;font-size:12px;margin-bottom:12px;">Fitness</div>
+          <p style="font-size:10px;font-weight:700;color:var(--ink-soft);margin-bottom:8px;">COLOR</p>
+          <div style="display:flex;gap:7px;margin-bottom:16px;">
+            <div style="width:22px;height:22px;border-radius:50%;background:#2DD4BF;box-shadow:0 0 0 2px #fff, 0 0 0 3px #2DD4BF;"></div>
+            <div style="width:22px;height:22px;border-radius:50%;background:#E879F9;"></div>
+            <div style="width:22px;height:22px;border-radius:50%;background:#A3E635;"></div>
+            <div style="width:22px;height:22px;border-radius:50%;background:#22D3EE;"></div>
+            <div style="width:22px;height:22px;border-radius:50%;background:#FB923C;"></div>
+            <div style="width:22px;height:22px;border-radius:50%;background:#64748B;"></div>
+          </div>
+          <div style="background:var(--accent);color:#fff;text-align:center;padding:11px;border-radius:10px;font-size:12px;font-weight:700;">Add category</div>
+        </div>
+      </div>
+    </div>
+    <div class="frame-block">
+      <div class="frame-caption">Manage Categories<span>defaults locked; custom can be renamed or deleted</span></div>
+      <div class="frame">
+        <div class="fr-head"><span>←</span><span class="fr-title" style="font-size:15px;">Categories</span><span></span></div>
+        <div style="padding:8px 12px 16px;">
+          <p style="font-size:10px;font-weight:700;color:var(--ink-soft);margin:6px 4px;">DEFAULT · LOCKED</p>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+            <div class="item" style="display:flex;align-items:center;gap:9px;font-size:12px;"><div class="sw-dot" style="width:12px;height:12px;background:#6366F1;"></div><span style="flex:1;">Work</span><span style="font-size:11px;color:var(--ink-soft);">🔒</span></div>
+            <div class="item" style="display:flex;align-items:center;gap:9px;font-size:12px;"><div class="sw-dot" style="width:12px;height:12px;background:#FB7185;"></div><span style="flex:1;">Personal</span><span style="font-size:11px;color:var(--ink-soft);">🔒</span></div>
+            <div class="item" style="display:flex;align-items:center;gap:9px;font-size:12px;"><div class="sw-dot" style="width:12px;height:12px;background:#A78BFA;"></div><span style="flex:1;">Ideas</span><span style="font-size:11px;color:var(--ink-soft);">🔒</span></div>
+            <div class="item" style="display:flex;align-items:center;gap:9px;font-size:12px;"><div class="sw-dot" style="width:12px;height:12px;background:#34D399;"></div><span style="flex:1;">Health</span><span style="font-size:11px;color:var(--ink-soft);">🔒</span></div>
+            <div class="item" style="display:flex;align-items:center;gap:9px;font-size:12px;"><div class="sw-dot" style="width:12px;height:12px;background:#38BDF8;"></div><span style="flex:1;">Study</span><span style="font-size:11px;color:var(--ink-soft);">🔒</span></div>
+          </div>
+          <p style="font-size:10px;font-weight:700;color:var(--ink-soft);margin:6px 4px;">CUSTOM</p>
+          <div class="item" style="display:flex;align-items:center;gap:9px;font-size:12px;"><div class="sw-dot" style="width:12px;height:12px;background:#2DD4BF;"></div><span style="flex:1;">Fitness</span><span style="font-size:11px;color:var(--ink-soft);">✏ &nbsp;🗑</span></div>
+          <p style="font-size:11px;font-weight:700;color:var(--accent);margin:12px 4px 0;">+ Add category</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-head">Deliberately cut — see PRD Section 9 for full reasoning</h2>
+  <p style="font-size:12px;color:var(--ink-soft);max-width:560px;line-height:1.7;">Home/Overview dashboard · Calendar/month grid · Reminders date-strip navigator · true WYSIWYG rich text (Markdown used instead) · Markdown alignment/highlight · grid/masonry note layout · grid/list view toggle · image/photo attachments · AlarmManager exact alarms (WorkManager used instead) · speed-dial FAB (dual FAB used instead).</p>
+</section>
+
+</body>
+</html>
