@@ -10,8 +10,8 @@ interface CategoryDao {
     @Insert
     suspend fun insert(category: Category): Long
 
-    @Update
-    suspend fun update(category: Category)
+    @Query("UPDATE categories SET name = :name WHERE id = :id AND isDefault = 0")
+    suspend fun renameCustom(id: Int, name: String): Int
 
     @Query("DELETE FROM categories WHERE id = :id AND isDefault = 0")
     suspend fun deleteCustomById(id: Int): Int

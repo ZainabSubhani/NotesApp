@@ -50,4 +50,17 @@ class CategoryDaoTest {
         assertEquals(1, dao.deleteCustomById(id))
         assertEquals(0, dao.getAll().size)
     }
+    @Test
+    fun defaultCategoryCannotBeRenamed() = runBlocking {
+        val id = dao.insert(Category(name = "Work", colorHex = "#6366F1", isDefault = true)).toInt()
+        assertEquals(0, dao.renameCustom(id, "Hacked"))
+        assertEquals("Work", dao.getAll()[0].name)
+    }
+
+    @Test
+    fun customCategoryCanBeRenamed() = runBlocking {
+        val id = dao.insert(Category(name = "Teal one", colorHex = "#2DD4BF")).toInt()
+        assertEquals(1, dao.renameCustom(id, "Fitness"))
+        assertEquals("Fitness", dao.getAll()[0].name)
+    }
 }
